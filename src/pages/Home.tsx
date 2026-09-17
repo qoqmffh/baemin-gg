@@ -46,14 +46,34 @@ export default function Home() {
 
   const items = {
     itemCount: 5,
-    item1: { text: 'FIND PLAYER', onClick: () => setSearchOpen((v) => !v) },
-    item2: { text: 'MATCH RECORD', onClick: () => navigate('/record') },
+    item1: {
+      text: 'FIND PLAYER',
+      image: { src: 'image/1.jpg', alt: 'FIND PLAYER' },
+      onClick: () => setSearchOpen((v) => !v),
+    },
+    item2: {
+      text: 'MATCH RECORD',
+      image: { src: 'image/2.jpg', alt: 'MATCH RECORD' },
+      onClick: () => navigate('/record'),
+    },
     // Two words on separate lines (via the literal newline) so it never
     // gets clipped on narrower viewports — see white-space: pre in
     // HoverImageReveal, which preserves this line break as-is.
-    item3: { text: 'LEADER\nBOARD', onClick: () => navigate('/rankings') },
-    item4: { text: 'CLUB INFO', onClick: () => navigate('/club') },
-    item5: { text: 'SIGN UP', onClick: () => navigate('/signup') },
+    item3: {
+      text: 'LEADER\nBOARD',
+      image: { src: 'image/3.jpg', alt: 'LEADERBOARD' },
+      onClick: () => navigate('/rankings'),
+    },
+    item4: {
+      text: 'CLUB INFO',
+      image: { src: 'image/4.jpg', alt: 'CLUB INFO' },
+      onClick: () => navigate('/club'),
+    },
+    item5: {
+      text: 'SIGN UP',
+      image: { src: 'image/5.jpg', alt: 'SIGN UP' },
+      onClick: () => navigate('/signup'),
+    },
   };
 
   const headingStyle: CSSProperties = {
@@ -92,7 +112,6 @@ export default function Home() {
             items={items}
             font={{ fontFamily: 'var(--font-vitro-core)', fontSize: 'clamp(22px, 5vw, 48px)' }}
             backgroundColor="transparent"
-            showPreview={false}
           />
         </div>
         {searchOpen && (
