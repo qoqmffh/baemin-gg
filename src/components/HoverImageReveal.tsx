@@ -38,6 +38,8 @@ interface HoverImageRevealProps {
   transition?: MotionTransition;
   backgroundColor?: string;
   style?: CSSProperties;
+  /** Set false to hide the cursor-following image box and use text-only hover highlighting. */
+  showPreview?: boolean;
 }
 
 const DEFAULT_ITEMS: ItemsValue = {
@@ -85,6 +87,7 @@ export default function HoverImageReveal({
   transition = DEFAULT_TRANSITION,
   backgroundColor = '#000000',
   style,
+  showPreview = true,
 }: HoverImageRevealProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState<number | null>(null);
@@ -139,49 +142,51 @@ export default function HoverImageReveal({
         ...style,
       }}
     >
-      <motion.div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          x,
-          y,
-          translateX: '-50%',
-          translateY: '-50%',
-          width: imageWidth,
-          height: imageHeight,
-          borderRadius: rounded,
-          overflow: 'hidden',
-          pointerEvents: 'none',
-          zIndex: 2,
-        }}
-        animate={{ opacity: anyActive ? 1 : 0 }}
-        transition={transition}
-      >
-        {list.map((item, i) => {
-          const src = item.image?.src;
-          const yPos = hovered == null ? '100%' : i < hovered ? '-100%' : i > hovered ? '100%' : '0%';
-          return (
-            <motion.div
-              key={i}
-              initial={false}
-              animate={{ y: yPos }}
-              transition={transition}
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', overflow: 'hidden' }}
-            >
-              {src ? (
-                <img
-                  src={src}
-                  alt={item.image?.alt || item.text || ''}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                />
-              ) : (
-                <div style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg,#333,#111)' }} />
-              )}
-            </motion.div>
-          );
-        })}
-      </motion.div>
+      {showPreview && (
+        <motion.div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            x,
+            y,
+            translateX: '-50%',
+            translateY: '-50%',
+            width: imageWidth,
+            height: imageHeight,
+            borderRadius: rounded,
+            overflow: 'hidden',
+            pointerEvents: 'none',
+            zIndex: 2,
+          }}
+          animate={{ opacity: anyActive ? 1 : 0 }}
+          transition={transition}
+        >
+          {list.map((item, i) => {
+            const src = item.image?.src;
+            const yPos = hovered == null ? '100%' : i < hovered ? '-100%' : i > hovered ? '100%' : '0%';
+            return (
+              <motion.div
+                key={i}
+                initial={false}
+                animate={{ y: yPos }}
+                transition={transition}
+                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', overflow: 'hidden' }}
+              >
+                {src ? (
+                  <img
+                    src={src}
+                    alt={item.image?.alt || item.text || ''}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  />
+                ) : (
+                  <div style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg,#333,#111)' }} />
+                )}
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      )}
 
       <div
         onMouseLeave={() => setHovered(null)}
