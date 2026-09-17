@@ -3,6 +3,8 @@ import { motion, useMotionValue, useSpring, type Transition as MotionTransition 
 
 interface Item {
   text?: string;
+  /** Caption drawn over the preview image/gradient; falls back to `text` when omitted. Supports a literal "\n" for a manual line break. */
+  previewText?: string;
   image?: { src?: string; srcSet?: string; alt?: string };
   link?: string;
   onClick?: () => void;
@@ -106,6 +108,7 @@ export default function HoverImageReveal({
     const it = data[`item${i}`] as Item | undefined;
     list.push({
       text: it?.text ?? `Item ${i}`,
+      previewText: it?.previewText,
       image: it?.image,
       link: it?.link,
       onClick: it?.onClick,
@@ -181,6 +184,28 @@ export default function HoverImageReveal({
                   />
                 ) : (
                   <div style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg,#333,#111)' }} />
+                )}
+                {item.previewText && (
+                  <div
+                    data-testid="preview-caption"
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      textAlign: 'center',
+                      color: '#FFFFFF',
+                      fontWeight: 800,
+                      fontSize: 'clamp(20px, 4vw, 40px)',
+                      whiteSpace: 'pre',
+                      textShadow: '0 4px 18px rgba(0,0,0,0.55)',
+                      padding: 12,
+                      pointerEvents: 'none',
+                    }}
+                  >
+                    {item.previewText}
+                  </div>
                 )}
               </motion.div>
             );

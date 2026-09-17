@@ -39,3 +39,13 @@ test('hovering an item highlights it (dims the others) via inline color style', 
   expect(first).toHaveStyle({ color: '#FFFFFF' });
   expect(second).toHaveStyle({ color: '#51565A' });
 });
+
+test('renders a previewText caption over the preview image, independent of the single-line menu label', () => {
+  const withPreviewText = {
+    itemCount: 1,
+    item1: { text: 'LEADERBOARD', previewText: 'LEADER\nBOARD' },
+  };
+  render(<HoverImageReveal items={withPreviewText} />);
+  expect(screen.getAllByText('LEADERBOARD').length).toBeGreaterThan(0);
+  expect(screen.getByTestId('preview-caption').textContent).toBe('LEADER\nBOARD');
+});

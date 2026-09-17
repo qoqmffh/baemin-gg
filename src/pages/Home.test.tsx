@@ -24,7 +24,7 @@ test('renders the 배민.GG header and English menu labels', () => {
     </MemoryRouter>
   );
   expect(screen.getByRole('heading', { name: '배민.GG' })).toBeInTheDocument();
-  for (const label of ['FIND PLAYER', 'MATCH RECORD', 'LEADER BOARD', 'CLUB INFO', 'SIGN UP']) {
+  for (const label of ['FIND PLAYER', 'MATCH RECORD', 'LEADERBOARD', 'CLUB INFO', 'SIGN UP']) {
     expect(screen.getAllByText(label).length).toBeGreaterThan(0);
   }
 });

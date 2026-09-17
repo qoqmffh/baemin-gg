@@ -56,11 +56,11 @@ export default function Home() {
       image: { src: 'image/2.jpg', alt: 'MATCH RECORD' },
       onClick: () => navigate('/record'),
     },
-    // Two words on separate lines (via the literal newline) so it never
-    // gets clipped on narrower viewports — see white-space: pre in
-    // HoverImageReveal, which preserves this line break as-is.
     item3: {
-      text: 'LEADER\nBOARD',
+      text: 'LEADERBOARD',
+      // Only the hover-preview caption wraps to two lines — the static
+      // menu label stays a single line.
+      previewText: 'LEADER\nBOARD',
       image: { src: 'image/3.jpg', alt: 'LEADERBOARD' },
       onClick: () => navigate('/rankings'),
     },
@@ -79,7 +79,7 @@ export default function Home() {
   const headingStyle: CSSProperties = {
     fontFamily: 'var(--font-vitro-core)',
     textAlign: 'center',
-    fontSize: 'clamp(48px, 9vw, 120px)',
+    fontSize: 'clamp(40px, 7vw, 96px)',
     margin: 0,
     paddingTop: '9vh',
   };
