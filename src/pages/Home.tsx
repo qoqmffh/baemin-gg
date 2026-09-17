@@ -3,9 +3,9 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import HoverImageReveal from '../components/HoverImageReveal';
 import PageBackground from '../components/PageBackground';
 import SideTaglines from '../components/SideTaglines';
-import { searchMembers, sortByRatingDesc, recentMatchesFor } from '../lib/members';
-import { GITHUB_OWNER, GITHUB_REPO, MEMBERS_PATH, MATCHES_PATH } from '../config';
-import type { Match, Member } from '../types';
+import { searchMembers, sortByRatingDesc } from '../lib/members';
+import { GITHUB_OWNER, GITHUB_REPO, MEMBERS_PATH } from '../config';
+import type { Member } from '../types';
 
 async function fetchPublicJson<T>(path: string): Promise<T> {
   const res = await fetch(
@@ -86,7 +86,15 @@ function SearchPill({
   );
 }
 
-function SearchResults({ query, members, matches }: { query: string; members: Member[]; matches: Match[] }) {
+function SearchResults({
+  query,
+  members,
+  onSelectPlayer,
+}: {
+  query: string;
+  members: Member[];
+  onSelectPlayer: (id: string) => void;
+}) {
   const trimmed = query.trim();
   if (!trimmed) return null;
 
@@ -102,43 +110,32 @@ function SearchResults({ query, members, matches }: { query: string; members: Me
   }
 
   return (
-    <div style={{ width: '100%', maxWidth: 600, margin: '20px auto 0', display: 'flex', flexDirection: 'column', gap: 16 }}>
-      {results.map((m) => {
-        const recent = recentMatchesFor(matches, m.id, 5);
-        return (
-          <div
-            key={m.id}
-            style={{
-              border: '1px solid rgba(255,255,255,0.2)',
-              borderRadius: 16,
-              padding: 20,
-              background: 'rgba(0,0,0,0.4)',
-            }}
-          >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-              <strong style={{ fontSize: 20 }}>{m.name}</strong>
-              <span style={{ color: 'rgba(255,255,255,0.75)' }}>
-                {rankById.get(m.id)}위 · {m.rating}점
-              </span>
-            </div>
-            <div style={{ marginTop: 4, color: 'rgba(255,255,255,0.75)' }}>
-              {m.wins}승 {m.losses}패
-            </div>
-            {recent.length > 0 && (
-              <ul style={{ marginTop: 12, paddingLeft: 18, color: 'rgba(255,255,255,0.65)', fontSize: 14 }}>
-                {recent.map((match) => {
-                  const won = (match.winner === 'A' ? match.teamA : match.teamB).includes(m.id);
-                  return (
-                    <li key={match.id}>
-                      {won ? '승' : '패'} {match.scoreA}:{match.scoreB} ({match.playedAt.slice(0, 10)})
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-          </div>
-        );
-      })}
+    <div style={{ width: '100%', maxWidth: 600, margin: '20px auto 0', display: 'flex', flexDirection: 'column', gap: 12 }}>
+      {results.map((m) => (
+        <button
+          key={m.id}
+          type="button"
+          onClick={() => onSelectPlayer(m.id)}
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'baseline',
+            border: '1px solid rgba(255,255,255,0.2)',
+            borderRadius: 16,
+            padding: 20,
+            background: 'rgba(0,0,0,0.4)',
+            color: '#FFFFFF',
+            cursor: 'pointer',
+            textAlign: 'left',
+            width: '100%',
+          }}
+        >
+          <strong style={{ fontSize: 20 }}>{m.name}</strong>
+          <span style={{ color: 'rgba(255,255,255,0.75)' }}>
+            {rankById.get(m.id)}위 · {m.rating}점 · {m.wins}승 {m.losses}패
+          </span>
+        </button>
+      ))}
     </div>
   );
 }
@@ -149,15 +146,11 @@ export default function Home() {
   const [searchOpen, setSearchOpen] = useState(searchParams.get('search') === '1');
   const [query, setQuery] = useState('');
   const [members, setMembers] = useState<Member[]>([]);
-  const [matches, setMatches] = useState<Match[]>([]);
 
   useEffect(() => {
     fetchPublicJson<Member[]>(MEMBERS_PATH)
       .then(setMembers)
       .catch(() => setMembers([]));
-    fetchPublicJson<Match[]>(MATCHES_PATH)
-      .then(setMatches)
-      .catch(() => setMatches([]));
   }, []);
 
   const menuItems = {
@@ -218,7 +211,13 @@ export default function Home() {
             showPreview={false}
           />
         </div>
-        {searchOpen && <SearchResults query={query} members={members} matches={matches} />}
+        {searchOpen && (
+          <SearchResults
+            query={query}
+            members={members}
+            onSelectPlayer={(id) => navigate(`/rankings?player=${id}`)}
+          />
+        )}
       </div>
     </div>
   );

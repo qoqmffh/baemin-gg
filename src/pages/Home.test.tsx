@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { beforeEach, expect, test, vi } from 'vitest';
 import Home from './Home';
 
@@ -29,7 +29,7 @@ test('renders the 배민.GG header and English menu labels', () => {
   }
 });
 
-test('clicking FIND PLAYER reveals a search box that shows a matching member\'s record and rank', async () => {
+test('clicking FIND PLAYER reveals a search box listing a matching member\'s rank and record', async () => {
   render(
     <MemoryRouter>
       <Home />
@@ -41,9 +41,28 @@ test('clicking FIND PLAYER reveals a search box that shows a matching member\'s 
   await user.type(input, '김태준');
 
   await waitFor(() => {
-    expect(screen.getByText('1위 · 1300점')).toBeInTheDocument();
+    expect(screen.getByText('1위 · 1300점 · 3승 1패')).toBeInTheDocument();
   });
-  expect(screen.getByText('3승 1패')).toBeInTheDocument();
+});
+
+test('clicking a search result navigates straight to their 전적현황 on the LEADERBOARD page', async () => {
+  render(
+    <MemoryRouter initialEntries={['/']}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/rankings" element={<div>RANKINGS PAGE</div>} />
+      </Routes>
+    </MemoryRouter>
+  );
+  const user = userEvent.setup();
+  await user.click(screen.getAllByText('FIND PLAYER')[0]);
+  const input = await screen.findByPlaceholderText('선수 이름을 검색해보세요');
+  await user.type(input, '김태준');
+
+  const result = await screen.findByText('1위 · 1300점 · 3승 1패');
+  await user.click(result);
+
+  expect(await screen.findByText('RANKINGS PAGE')).toBeInTheDocument();
 });
 
 test('opens the search box automatically when navigated to with ?search=1', async () => {

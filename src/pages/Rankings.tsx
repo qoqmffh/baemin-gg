@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import TopNav from '../components/TopNav';
 import PageBackground from '../components/PageBackground';
 import SideTaglines from '../components/SideTaglines';
+import PlayerStatsPanel from '../components/PlayerStatsPanel';
 import { sortByRatingDesc, recentMatches, biggestUpsets } from '../lib/members';
 import { GITHUB_OWNER, GITHUB_REPO, MEMBERS_PATH, MATCHES_PATH } from '../config';
 import type { Member, Match } from '../types';
@@ -14,7 +15,15 @@ async function fetchPublicJson<T>(path: string): Promise<T> {
   return res.json() as Promise<T>;
 }
 
-type TabKey = 'ranking' | 'recent' | 'upsets';
+type TabKey = 'stats' | 'ranking' | 'recent' | 'upsets';
+
+function ChartBarIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M4 20V10M12 20V4M20 20v-7" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" />
+    </svg>
+  );
+}
 
 function TrophyIcon() {
   return (
@@ -52,6 +61,7 @@ function StarIcon() {
 }
 
 const TABS: { key: TabKey; label: string; subtitle: string; Icon: () => JSX.Element }[] = [
+  { key: 'stats', label: '전적현황', subtitle: 'OVERALL RECORD', Icon: ChartBarIcon },
   { key: 'ranking', label: '랭킹', subtitle: 'RANKING', Icon: TrophyIcon },
   { key: 'recent', label: '최근 경기', subtitle: 'RECENT MATCHES', Icon: ClockIcon },
   { key: 'upsets', label: '최대 이변 승리', subtitle: 'BIGGEST UPSET', Icon: StarIcon },
@@ -59,10 +69,17 @@ const TABS: { key: TabKey; label: string; subtitle: string; Icon: () => JSX.Elem
 
 export default function Rankings() {
   const location = useLocation();
-  const initialTab = (location.state as { tab?: TabKey } | null)?.tab;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const playerId = searchParams.get('player');
+  const stateTab = (location.state as { tab?: TabKey } | null)?.tab;
+  const initialTab: TabKey = playerId
+    ? 'stats'
+    : stateTab && TABS.some((t) => t.key === stateTab)
+      ? stateTab
+      : 'ranking';
   const [members, setMembers] = useState<Member[]>([]);
   const [matches, setMatches] = useState<Match[]>([]);
-  const [tab, setTab] = useState<TabKey>(initialTab && TABS.some((t) => t.key === initialTab) ? initialTab : 'ranking');
+  const [tab, setTab] = useState<TabKey>(initialTab);
 
   useEffect(() => {
     fetchPublicJson<Member[]>(MEMBERS_PATH).then(setMembers).catch(() => setMembers([]));
@@ -104,6 +121,16 @@ export default function Rankings() {
             <h2>{active.label}</h2>
             <p>{active.subtitle}</p>
           </div>
+
+          {tab === 'stats' && (
+            <PlayerStatsPanel
+              members={members}
+              matches={matches}
+              selectedPlayerId={playerId}
+              onSelectPlayer={(id) => setSearchParams({ player: id })}
+              onClear={() => setSearchParams({})}
+            />
+          )}
 
           {tab === 'ranking' && (
             <div className="rankings-list">
