@@ -13,6 +13,7 @@ const members: Member[] = [
 
 beforeEach(() => {
   vi.restoreAllMocks();
+  localStorage.setItem('baemin-gg-pat', 'ghp_test');
   vi.spyOn(global, 'fetch').mockImplementation(async (url: RequestInfo | URL) => {
     if (String(url).includes('members.json')) return new Response(JSON.stringify(members), { status: 200 });
     return new Response(JSON.stringify([]), { status: 200 });

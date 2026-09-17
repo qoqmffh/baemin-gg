@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import TopNav from '../components/TopNav';
 import PageBackground from '../components/PageBackground';
 import SideTaglines from '../components/SideTaglines';
+import PatGate from '../components/PatGate';
 import { updateJsonFile } from '../lib/github';
 import { MEMBERS_PATH, INITIAL_RATING } from '../config';
 import type { Member } from '../types';
@@ -78,51 +79,53 @@ export default function Signup() {
       <TopNav />
       <div className="signup-wrap">
         <div className="signup-card">
-          {done ? (
-            <p>가입이 완료되었습니다.</p>
-          ) : (
-            <form onSubmit={handleSubmit}>
-              <div className="signup-card__eyebrow">JOIN US</div>
-              <h1>회원가입</h1>
-              <p className="signup-card__subtitle">함께하는 배드민턴, 더 멀리 가는 우리</p>
+          <PatGate>
+            {done ? (
+              <p>가입이 완료되었습니다.</p>
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <div className="signup-card__eyebrow">JOIN US</div>
+                <h1>회원가입</h1>
+                <p className="signup-card__subtitle">함께하는 배드민턴, 더 멀리 가는 우리</p>
 
-              <div className="signup-field">
-                <PersonIcon />
-                <input
-                  aria-label="이름"
-                  placeholder="이름을 입력하세요."
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="signup-field">
-                <GroupIcon />
-                <input
-                  aria-label="소속"
-                  placeholder="소속을 입력하세요. (예: 학교, 회사, 동호회 등)"
-                  value={department}
-                  onChange={(e) => setDepartment(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="signup-field">
-                <BuildingIcon />
-                <input
-                  aria-label="부서"
-                  placeholder="부서를 입력하세요. (예: 인사팀, 개발팀 등)"
-                  value={position}
-                  onChange={(e) => setPosition(e.target.value)}
-                  required
-                />
-              </div>
+                <div className="signup-field">
+                  <PersonIcon />
+                  <input
+                    aria-label="이름"
+                    placeholder="이름을 입력하세요."
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="signup-field">
+                  <GroupIcon />
+                  <input
+                    aria-label="소속"
+                    placeholder="소속을 입력하세요. (예: 학교, 회사, 동호회 등)"
+                    value={department}
+                    onChange={(e) => setDepartment(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="signup-field">
+                  <BuildingIcon />
+                  <input
+                    aria-label="부서"
+                    placeholder="부서를 입력하세요. (예: 인사팀, 개발팀 등)"
+                    value={position}
+                    onChange={(e) => setPosition(e.target.value)}
+                    required
+                  />
+                </div>
 
-              {error && <p role="alert">{error}</p>}
-              <button type="submit" className="signup-submit" disabled={submitting}>
-                가입하기 →
-              </button>
-            </form>
-          )}
+                {error && <p role="alert">{error}</p>}
+                <button type="submit" className="signup-submit" disabled={submitting}>
+                  가입하기 →
+                </button>
+              </form>
+            )}
+          </PatGate>
         </div>
       </div>
     </div>

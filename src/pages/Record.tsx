@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import TopNav from '../components/TopNav';
 import PageBackground from '../components/PageBackground';
 import SideTaglines from '../components/SideTaglines';
+import PatGate from '../components/PatGate';
 import { updateJsonFile } from '../lib/github';
 import { calculateMatchRatingChanges } from '../lib/rating';
 import { recentMatches } from '../lib/members';
@@ -120,81 +121,83 @@ export default function Record() {
         <p>우리의 기록이, 더 나은 플레이를 만든다.</p>
       </div>
 
-      {done ? (
-        <div className="record-card">
-          <p>경기가 등록되었습니다.</p>
-        </div>
-      ) : (
-        <form onSubmit={handleSubmit} className="record-card">
-          <div className="record-card__header">
-            <div>
-              <h2>전적기록</h2>
-              <p>경기 기록을 등록하고, 실력을 성장시켜보세요.</p>
+      <PatGate>
+        {done ? (
+          <div className="record-card">
+            <p>경기가 등록되었습니다.</p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="record-card">
+            <div className="record-card__header">
+              <div>
+                <h2>전적기록</h2>
+                <p>경기 기록을 등록하고, 실력을 성장시켜보세요.</p>
+              </div>
+              <div className="record-card__badge">
+                BADMINTON
+                <br />
+                MATCH RECORD
+              </div>
             </div>
-            <div className="record-card__badge">
-              BADMINTON
-              <br />
-              MATCH RECORD
-            </div>
-          </div>
 
-          <div className="record-field">
-            <label htmlFor="match-type">경기 형태</label>
-            <select
-              id="match-type"
-              value={type}
-              onChange={(e) => {
-                const nextType = e.target.value as MatchType;
-                setType(nextType);
-                const size = nextType === 'singles' ? 1 : 2;
-                setTeamA(Array.from({ length: size }, (_, i) => teamA[i] ?? ''));
-                setTeamB(Array.from({ length: size }, (_, i) => teamB[i] ?? ''));
-              }}
-            >
-              <option value="singles">단식</option>
-              <option value="doubles">복식</option>
-            </select>
-          </div>
-
-          <div className="record-field">
-            <label>팀 A</label>
-            {teamSelect(teamA, setTeamA, '팀 A')}
-          </div>
-          <div className="record-field">
-            <label>팀 B</label>
-            {teamSelect(teamB, setTeamB, '팀 B')}
-          </div>
-
-          <div className="record-score-row">
             <div className="record-field">
-              <label htmlFor="score-a">팀 A 점수</label>
-              <input
-                id="score-a"
-                type="number"
-                placeholder="숫자 입력"
-                value={scoreA}
-                onChange={(e) => setScoreA(e.target.value)}
-                required
-              />
+              <label htmlFor="match-type">경기 형태</label>
+              <select
+                id="match-type"
+                value={type}
+                onChange={(e) => {
+                  const nextType = e.target.value as MatchType;
+                  setType(nextType);
+                  const size = nextType === 'singles' ? 1 : 2;
+                  setTeamA(Array.from({ length: size }, (_, i) => teamA[i] ?? ''));
+                  setTeamB(Array.from({ length: size }, (_, i) => teamB[i] ?? ''));
+                }}
+              >
+                <option value="singles">단식</option>
+                <option value="doubles">복식</option>
+              </select>
+            </div>
+
+            <div className="record-field">
+              <label>팀 A</label>
+              {teamSelect(teamA, setTeamA, '팀 A')}
             </div>
             <div className="record-field">
-              <label htmlFor="score-b">팀 B 점수</label>
-              <input
-                id="score-b"
-                type="number"
-                placeholder="숫자 입력"
-                value={scoreB}
-                onChange={(e) => setScoreB(e.target.value)}
-                required
-              />
+              <label>팀 B</label>
+              {teamSelect(teamB, setTeamB, '팀 B')}
             </div>
-          </div>
 
-          <button type="submit" className="record-submit">
-            경기 등록
-          </button>
-        </form>
-      )}
+            <div className="record-score-row">
+              <div className="record-field">
+                <label htmlFor="score-a">팀 A 점수</label>
+                <input
+                  id="score-a"
+                  type="number"
+                  placeholder="숫자 입력"
+                  value={scoreA}
+                  onChange={(e) => setScoreA(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="record-field">
+                <label htmlFor="score-b">팀 B 점수</label>
+                <input
+                  id="score-b"
+                  type="number"
+                  placeholder="숫자 입력"
+                  value={scoreB}
+                  onChange={(e) => setScoreB(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+
+            <button type="submit" className="record-submit">
+              경기 등록
+            </button>
+          </form>
+        )}
+      </PatGate>
 
       <div className="record-recent">
         <div className="record-recent__header">

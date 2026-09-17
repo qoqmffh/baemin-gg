@@ -14,6 +14,7 @@ const matches = [
 
 beforeEach(() => {
   vi.restoreAllMocks();
+  localStorage.setItem('baemin-gg-pat', 'ghp_test');
   vi.spyOn(config, 'ADMIN_PASSWORD', 'get').mockReturnValue('secret123');
   vi.spyOn(global, 'fetch').mockImplementation(async (url: RequestInfo | URL) => {
     if (String(url).includes('members.json')) return new Response(JSON.stringify(members), { status: 200 });

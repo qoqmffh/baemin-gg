@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import PatGate from '../components/PatGate';
 import { updateJsonFile } from '../lib/github';
 import { SEED_RATING } from '../lib/rating';
 import { ADMIN_PASSWORD, GITHUB_OWNER, GITHUB_REPO, MEMBERS_PATH, MATCHES_PATH } from '../config';
@@ -75,46 +76,48 @@ export default function Admin() {
   }
 
   return (
-    <div style={{ padding: 24 }}>
-      <h2>관리자</h2>
+    <PatGate>
+      <div style={{ padding: 24 }}>
+        <h2>관리자</h2>
 
-      <h3>창립멤버 시드 지정</h3>
-      <p>최초 시드전 결과에 따라 1,2위=A / 3,4위=B / 5,6위=C 시드를 지정하세요. 한번 지정하면 해당 회원의 레이팅이 영구 고정 시드값으로 바뀝니다.</p>
-      <ul>
-        {members.map((m) => (
-          <li key={m.id}>
-            {m.name} (현재: {m.seedTier ? `${m.seedTier}시드 · ${m.rating}점` : `일반 · ${m.rating}점`})
-            <select
-              aria-label={`${m.name} 시드 지정`}
-              value={m.seedTier ?? ''}
-              onChange={(e) => setSeedTier(m.id, (e.target.value || undefined) as SeedTier | undefined)}
-            >
-              <option value="">없음</option>
-              <option value="A">A시드</option>
-              <option value="B">B시드</option>
-              <option value="C">C시드</option>
-            </select>
-          </li>
-        ))}
-      </ul>
+        <h3>창립멤버 시드 지정</h3>
+        <p>최초 시드전 결과에 따라 1,2위=A / 3,4위=B / 5,6위=C 시드를 지정하세요. 한번 지정하면 해당 회원의 레이팅이 영구 고정 시드값으로 바뀝니다.</p>
+        <ul>
+          {members.map((m) => (
+            <li key={m.id}>
+              {m.name} (현재: {m.seedTier ? `${m.seedTier}시드 · ${m.rating}점` : `일반 · ${m.rating}점`})
+              <select
+                aria-label={`${m.name} 시드 지정`}
+                value={m.seedTier ?? ''}
+                onChange={(e) => setSeedTier(m.id, (e.target.value || undefined) as SeedTier | undefined)}
+              >
+                <option value="">없음</option>
+                <option value="A">A시드</option>
+                <option value="B">B시드</option>
+                <option value="C">C시드</option>
+              </select>
+            </li>
+          ))}
+        </ul>
 
-      <h3>회원</h3>
-      <ul>
-        {members.map((m) => (
-          <li key={m.id}>
-            {m.name} <button onClick={() => deleteMember(m.id)}>회원 삭제: {m.name}</button>
-          </li>
-        ))}
-      </ul>
-      <h3>경기기록</h3>
-      <ul>
-        {matches.map((m) => (
-          <li key={m.id}>
-            {m.scoreA}:{m.scoreB} ({m.playedAt}){' '}
-            <button onClick={() => deleteMatch(m.id)}>경기 삭제: {m.id}</button>
-          </li>
-        ))}
-      </ul>
-    </div>
+        <h3>회원</h3>
+        <ul>
+          {members.map((m) => (
+            <li key={m.id}>
+              {m.name} <button onClick={() => deleteMember(m.id)}>회원 삭제: {m.name}</button>
+            </li>
+          ))}
+        </ul>
+        <h3>경기기록</h3>
+        <ul>
+          {matches.map((m) => (
+            <li key={m.id}>
+              {m.scoreA}:{m.scoreB} ({m.playedAt}){' '}
+              <button onClick={() => deleteMatch(m.id)}>경기 삭제: {m.id}</button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </PatGate>
   );
 }

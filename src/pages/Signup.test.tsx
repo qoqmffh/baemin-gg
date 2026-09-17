@@ -8,6 +8,7 @@ import type { Member } from '../types';
 
 beforeEach(() => {
   vi.restoreAllMocks();
+  localStorage.setItem('baemin-gg-pat', 'ghp_test');
 });
 
 test('submitting the form appends a new member and shows a success message', async () => {
