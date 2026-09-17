@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "id": "5866ff0b-52a9-4a82-bd01-c049712b807c",
+    "name": "박태준",
+    "department": "위드컴퍼니",
+    "position": "영업지원팀",
+    "rating": 1200,
+    "wins": 0,
+    "losses": 0,
+    "createdAt": "2026-09-17T07:47:03.391Z"
+  }
+]
