@@ -93,6 +93,7 @@ export default function HoverImageReveal({
 }: HoverImageRevealProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState<number | null>(null);
+  const [failedImages, setFailedImages] = useState<Record<number, boolean>>({});
 
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
@@ -176,10 +177,11 @@ export default function HoverImageReveal({
                 transition={transition}
                 style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', overflow: 'hidden' }}
               >
-                {src ? (
+                {src && !failedImages[i] ? (
                   <img
                     src={src}
                     alt={item.image?.alt || item.text || ''}
+                    onError={() => setFailedImages((prev) => ({ ...prev, [i]: true }))}
                     style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                   />
                 ) : (

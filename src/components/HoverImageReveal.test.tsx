@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expect, test, vi } from 'vitest';
 import HoverImageReveal from './HoverImageReveal';
@@ -48,4 +48,15 @@ test('renders a previewText caption over the preview image, independent of the s
   render(<HoverImageReveal items={withPreviewText} />);
   expect(screen.getAllByText('LEADERBOARD').length).toBeGreaterThan(0);
   expect(screen.getByTestId('preview-caption').textContent).toBe('LEADER\nBOARD');
+});
+
+test('falls back to the gradient placeholder (no broken-image alt text) when the preview image fails to load', () => {
+  const withBrokenImage = {
+    itemCount: 1,
+    item1: { text: 'LEADERBOARD', image: { src: 'image/3.jpg', alt: 'LEADERBOARD' } },
+  };
+  render(<HoverImageReveal items={withBrokenImage} />);
+  const img = screen.getByRole('img', { name: 'LEADERBOARD' });
+  fireEvent.error(img);
+  expect(screen.queryByRole('img', { name: 'LEADERBOARD' })).not.toBeInTheDocument();
 });
