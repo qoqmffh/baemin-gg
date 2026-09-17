@@ -80,6 +80,7 @@ export default function Record() {
         };
       })
     );
+    setMatches((current) => [...current, match]);
     setDone(true);
   };
 

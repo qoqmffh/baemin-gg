@@ -55,6 +55,9 @@ test('recording a singles match updates matches.json and both members ratings', 
   expect(loser.rating).toBeLessThan(1200);
   expect(winner.wins).toBe(1);
   expect(loser.losses).toBe(1);
+
+  expect(await screen.findByText('경기가 등록되었습니다.')).toBeInTheDocument();
+  expect(screen.getByText('21 - 15')).toBeInTheDocument();
 });
 
 test('shows the 3 most recent matches with player names, type, and score', async () => {
