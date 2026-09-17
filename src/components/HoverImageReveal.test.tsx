@@ -50,6 +50,14 @@ test('renders a previewText caption over the preview image, independent of the s
   expect(screen.getByTestId('preview-caption').textContent).toBe('LEADER\nBOARD');
 });
 
+test('dimAll dims every item even when none of them is hovered', () => {
+  render(<HoverImageReveal items={items} textColor="#FFFFFF" dimColor="#51565A" dimAll />);
+  const first = screen.getAllByText('FIND PLAYER')[0];
+  const second = screen.getAllByText('MATCH RECORD')[0];
+  expect(first).toHaveStyle({ color: '#51565A' });
+  expect(second).toHaveStyle({ color: '#51565A' });
+});
+
 test('falls back to the gradient placeholder (no broken-image alt text) when the preview image fails to load', () => {
   const withBrokenImage = {
     itemCount: 1,

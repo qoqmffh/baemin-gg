@@ -29,18 +29,35 @@ test('renders the 배민.GG header and English menu labels', () => {
   }
 });
 
-test('clicking FIND PLAYER reveals a search box that filters members by name', async () => {
+test('clicking FIND PLAYER reveals a search box that shows a matching member\'s record and rank', async () => {
   render(
     <MemoryRouter>
       <Home />
     </MemoryRouter>
   );
   const user = userEvent.setup();
-  await user.click(screen.getAllByText('FIND PLAYER')[0]);
-  const input = await screen.findByPlaceholderText('회원명 검색');
+  await user.click(screen.getByText('FIND PLAYER'));
+  const input = await screen.findByPlaceholderText('선수 이름을 검색해보세요');
   await user.type(input, '김태준');
 
   await waitFor(() => {
-    expect(screen.getByText(/rating/i)).toBeInTheDocument();
+    expect(screen.getByText('1위 · 1300점')).toBeInTheDocument();
+  });
+  expect(screen.getByText('3승 1패')).toBeInTheDocument();
+});
+
+test('shows a not-found message when no member matches the query', async () => {
+  render(
+    <MemoryRouter>
+      <Home />
+    </MemoryRouter>
+  );
+  const user = userEvent.setup();
+  await user.click(screen.getByText('FIND PLAYER'));
+  const input = await screen.findByPlaceholderText('선수 이름을 검색해보세요');
+  await user.type(input, '없는사람');
+
+  await waitFor(() => {
+    expect(screen.getByText("'없는사람'님을 찾을 수 없습니다.")).toBeInTheDocument();
   });
 });

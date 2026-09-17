@@ -42,6 +42,8 @@ interface HoverImageRevealProps {
   style?: CSSProperties;
   /** Set false to hide the cursor-following image box and use text-only hover highlighting. */
   showPreview?: boolean;
+  /** Dim every item (as if something else has focus) even when none of them is actually hovered. */
+  dimAll?: boolean;
 }
 
 const DEFAULT_ITEMS: ItemsValue = {
@@ -90,6 +92,7 @@ export default function HoverImageReveal({
   backgroundColor = '#000000',
   style,
   showPreview = true,
+  dimAll = false,
 }: HoverImageRevealProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState<number | null>(null);
@@ -115,7 +118,7 @@ export default function HoverImageReveal({
       onClick: it?.onClick,
     });
   }
-  const anyActive = hovered != null;
+  const anyActive = hovered != null || dimAll;
 
   const onMove = (e: React.MouseEvent) => {
     const rect = containerRef.current?.getBoundingClientRect();
