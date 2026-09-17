@@ -28,5 +28,15 @@
     "wins": 0,
     "losses": 0,
     "createdAt": "2026-09-17T07:50:54.610Z"
+  },
+  {
+    "id": "34cf11c6-9ff5-4bff-b7f5-fe04aa5db7ec",
+    "name": "박호영",
+    "department": "위드컴퍼니",
+    "position": "무선영업팀",
+    "rating": 1200,
+    "wins": 0,
+    "losses": 0,
+    "createdAt": "2026-09-17T07:51:04.885Z"
   }
 ]
