@@ -45,3 +45,20 @@ test('deleting a member calls updateJsonFile with that member removed', async ()
   const updater = call[2] as (current: typeof members) => typeof members;
   expect(updater(members)).toEqual([]);
 });
+
+test('assigning a founding-member seed tier sets seedTier and the canonical seed rating', async () => {
+  const updateSpy = vi.spyOn(github, 'updateJsonFile').mockResolvedValue(undefined);
+
+  render(<Admin />);
+  const user = userEvent.setup();
+  await user.type(screen.getByLabelText('관리자 비밀번호'), 'secret123');
+  await user.click(screen.getByRole('button', { name: '입장' }));
+
+  const select = await screen.findByLabelText('김태준 시드 지정');
+  await user.selectOptions(select, 'A');
+
+  const call = updateSpy.mock.calls.find((c) => (c[1] as string).includes('seed tier'))!;
+  const updater = call[2] as (current: typeof members) => typeof members;
+  const [updated] = updater(members);
+  expect(updated).toMatchObject({ seedTier: 'A', rating: 1300 });
+});

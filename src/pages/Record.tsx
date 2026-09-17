@@ -7,7 +7,7 @@ import SideTaglines from '../components/SideTaglines';
 import { updateJsonFile } from '../lib/github';
 import { calculateMatchRatingChanges } from '../lib/rating';
 import { recentMatches } from '../lib/members';
-import { GITHUB_OWNER, GITHUB_REPO, MEMBERS_PATH, MATCHES_PATH } from '../config';
+import { GITHUB_OWNER, GITHUB_REPO, MEMBERS_PATH, MATCHES_PATH, INITIAL_RATING } from '../config';
 import type { Member, Match, MatchType } from '../types';
 import './Record.css';
 
@@ -43,10 +43,11 @@ export default function Record() {
     const scoreANum = Number(scoreA);
     const scoreBNum = Number(scoreB);
     const winner: 'A' | 'B' = scoreANum > scoreBNum ? 'A' : 'B';
-    const ratingById = new Map(members.map((m) => [m.id, m.rating]));
+    const memberById = new Map(members.map((m) => [m.id, m]));
+    const fallbackMember = { rating: INITIAL_RATING };
     const { teamADelta, teamBDelta } = calculateMatchRatingChanges(
-      teamA.map((id) => ratingById.get(id) ?? 1200),
-      teamB.map((id) => ratingById.get(id) ?? 1200),
+      teamA.map((id) => memberById.get(id) ?? fallbackMember),
+      teamB.map((id) => memberById.get(id) ?? fallbackMember),
       winner
     );
 

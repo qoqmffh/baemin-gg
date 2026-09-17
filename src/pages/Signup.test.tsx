@@ -37,7 +37,7 @@ test('submitting the form appends a new member and shows a success message', asy
   expect(path).toBe('data/members.json');
   const result = updater([]);
   expect(result).toHaveLength(1);
-  expect(result[0]).toMatchObject({ name: '김태준', department: '개발', position: '사원', rating: 1200, wins: 0, losses: 0 });
+  expect(result[0]).toMatchObject({ name: '김태준', department: '개발', position: '사원', rating: 1100, wins: 0, losses: 0 });
 
   expect(await screen.findByText('가입이 완료되었습니다.')).toBeInTheDocument();
 });
