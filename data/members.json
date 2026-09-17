@@ -8,5 +8,15 @@
     "wins": 0,
     "losses": 0,
     "createdAt": "2026-09-17T07:47:03.391Z"
+  },
+  {
+    "id": "02ff3622-2eb4-43ea-806b-c4d6d6aa672a",
+    "name": "방종헌",
+    "department": "위드컴퍼니",
+    "position": "유선영업팀",
+    "rating": 1200,
+    "wins": 0,
+    "losses": 0,
+    "createdAt": "2026-09-17T07:50:41.972Z"
   }
 ]
