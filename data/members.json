@@ -4,9 +4,9 @@
     "name": "박태준",
     "department": "위드컴퍼니",
     "position": "영업지원팀",
-    "rating": 1200,
+    "rating": 1184,
     "wins": 0,
-    "losses": 0,
+    "losses": 1,
     "createdAt": "2026-09-17T07:47:03.391Z"
   },
   {
@@ -14,8 +14,8 @@
     "name": "방종헌",
     "department": "위드컴퍼니",
     "position": "유선영업팀",
-    "rating": 1200,
-    "wins": 0,
+    "rating": 1216,
+    "wins": 1,
     "losses": 0,
     "createdAt": "2026-09-17T07:50:41.972Z"
   },
