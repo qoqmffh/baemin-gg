@@ -38,5 +38,15 @@
     "wins": 0,
     "losses": 0,
     "createdAt": "2026-09-17T07:51:04.885Z"
+  },
+  {
+    "id": "22f9f857-3769-4e4e-b180-18f816837394",
+    "name": "오하람",
+    "department": "위드컴퍼니",
+    "position": "도매영업팀",
+    "rating": 1200,
+    "wins": 0,
+    "losses": 0,
+    "createdAt": "2026-09-17T07:51:16.861Z"
   }
 ]
