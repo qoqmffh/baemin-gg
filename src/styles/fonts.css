@@ -1,0 +1,29 @@
+@font-face {
+  font-family: 'VitroCore';
+  src: url('/fonts/VITRO CORE OTF.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'VitroInspire';
+  src: url('/fonts/VITRO INSPIRE OTF.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'VitroPride';
+  src: url('/fonts/VITRO PRIDE OTF.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-vitro-core: 'VitroCore', sans-serif;
+  --font-vitro-inspire: 'VitroInspire', sans-serif;
+  --font-vitro-pride: 'VitroPride', sans-serif;
+}
