@@ -1,0 +1,46 @@
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
+import { beforeEach, expect, test, vi } from 'vitest';
+import Home from './Home';
+
+const members = [
+  { id: 'm1', name: '김태준', department: '개발', position: '사원', rating: 1300, wins: 3, losses: 1, createdAt: '2026-01-01' },
+];
+
+beforeEach(() => {
+  vi.spyOn(global, 'fetch').mockImplementation(async (url) => {
+    if (String(url).includes('members.json')) {
+      return new Response(JSON.stringify(members), { status: 200 });
+    }
+    return new Response(JSON.stringify([]), { status: 200 });
+  });
+});
+
+test('renders the 배민.GG header and English menu labels', () => {
+  render(
+    <MemoryRouter>
+      <Home />
+    </MemoryRouter>
+  );
+  expect(screen.getByText('배민.GG')).toBeInTheDocument();
+  for (const label of ['FIND PLAYER', 'MATCH RECORD', 'LEADERBOARD', 'CLUB INFO', 'SIGN UP']) {
+    expect(screen.getAllByText(label).length).toBeGreaterThan(0);
+  }
+});
+
+test('clicking FIND PLAYER reveals a search box that filters members by name', async () => {
+  render(
+    <MemoryRouter>
+      <Home />
+    </MemoryRouter>
+  );
+  const user = userEvent.setup();
+  await user.click(screen.getAllByText('FIND PLAYER')[0]);
+  const input = await screen.findByPlaceholderText('회원명 검색');
+  await user.type(input, '김태준');
+
+  await waitFor(() => {
+    expect(screen.getByText(/rating/i)).toBeInTheDocument();
+  });
+});
