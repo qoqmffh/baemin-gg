@@ -48,5 +48,15 @@
     "wins": 0,
     "losses": 0,
     "createdAt": "2026-09-17T07:51:16.861Z"
+  },
+  {
+    "id": "e6d8bdee-52f0-4589-9180-f5fe2c0cecfb",
+    "name": "배하나",
+    "department": "화승",
+    "position": "대리점운영팀",
+    "rating": 1200,
+    "wins": 0,
+    "losses": 0,
+    "createdAt": "2026-09-17T07:51:28.856Z"
   }
 ]
