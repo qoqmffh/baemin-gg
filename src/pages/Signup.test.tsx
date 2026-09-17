@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { beforeEach, expect, test, vi } from 'vitest';
 import Signup from './Signup';
 import * as github from '../lib/github';
+import type { Member } from '../types';
 
 beforeEach(() => {
   vi.restoreAllMocks();
@@ -23,7 +24,11 @@ test('submitting the form appends a new member and shows a success message', asy
   await user.click(screen.getByRole('button', { name: '가입하기' }));
 
   expect(updateSpy).toHaveBeenCalledTimes(1);
-  const [path, , updater] = updateSpy.mock.calls[0];
+  const [path, , updater] = updateSpy.mock.calls[0] as unknown as [
+    string,
+    string,
+    (current: Member[]) => Member[],
+  ];
   expect(path).toBe('data/members.json');
   const result = updater([]);
   expect(result).toHaveLength(1);

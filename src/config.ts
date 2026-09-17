@@ -10,4 +10,4 @@ export const INITIAL_RATING = 1200;
 
 // Frontend-only gate for the hidden admin screen. Not real security —
 // the repo is public, so treat this as a convenience lock, not a secret.
-export const ADMIN_PASSWORD = 'CHANGE_ME_ADMIN_PASSWORD';
+export const ADMIN_PASSWORD: string = 'CHANGE_ME_ADMIN_PASSWORD';

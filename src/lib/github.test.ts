@@ -60,7 +60,7 @@ test('retries after a 409 conflict by re-fetching the latest sha', async () => {
 
 test('throws after exhausting retries on repeated conflicts', async () => {
   const get = githubContentResponse([{ id: '1' }], 'sha-1');
-  vi.spyOn(global, 'fetch').mockImplementation(async (_url, init) => {
+  vi.spyOn(global, 'fetch').mockImplementation(async (_url: RequestInfo | URL, init?: RequestInit) => {
     if (!init || init.method === undefined) {
       return new Response(JSON.stringify(get), { status: 200 });
     }

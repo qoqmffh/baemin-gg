@@ -11,7 +11,7 @@ const matches = [
 ];
 
 beforeEach(() => {
-  vi.spyOn(global, 'fetch').mockImplementation(async (url) => {
+  vi.spyOn(global, 'fetch').mockImplementation(async (url: RequestInfo | URL) => {
     if (String(url).includes('members.json')) return new Response(JSON.stringify(members), { status: 200 });
     return new Response(JSON.stringify(matches), { status: 200 });
   });

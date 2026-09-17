@@ -9,7 +9,7 @@ const members = [
 ];
 
 beforeEach(() => {
-  vi.spyOn(global, 'fetch').mockImplementation(async (url) => {
+  vi.spyOn(global, 'fetch').mockImplementation(async (url: RequestInfo | URL) => {
     if (String(url).includes('members.json')) {
       return new Response(JSON.stringify(members), { status: 200 });
     }
