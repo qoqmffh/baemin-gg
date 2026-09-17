@@ -1,0 +1,178 @@
+.record-hero {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 24px 16px 0;
+}
+
+.record-hero__eyebrow {
+  width: 28px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.5);
+  margin: 0 auto 16px;
+}
+
+.record-hero h1 {
+  font-family: var(--font-vitro-core);
+  font-size: clamp(32px, 6vw, 56px);
+  margin: 0;
+}
+
+.record-hero p {
+  margin: 8px 0 0;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.record-card {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 32px auto 0;
+  padding: 32px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(10, 10, 10, 0.7);
+  box-sizing: border-box;
+}
+
+.record-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.record-card__header h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.record-card__header p {
+  margin: 6px 0 0;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 13px;
+}
+
+.record-card__badge {
+  text-align: right;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+}
+
+.record-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.record-field label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.record-field select,
+.record-field input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: #ffffff;
+  font-size: 15px;
+}
+
+.record-score-row {
+  display: flex;
+  gap: 16px;
+}
+
+.record-score-row .record-field {
+  flex: 1;
+}
+
+.record-submit {
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px;
+  border-radius: 9999px;
+  border: none;
+  background: #ffffff;
+  color: #000000;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.record-recent {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 20px auto 48px;
+  padding: 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(10, 10, 10, 0.7);
+  box-sizing: border-box;
+}
+
+.record-recent__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.record-recent__header h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.record-recent__header a {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.record-recent table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.record-recent th {
+  text-align: left;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 500;
+  padding: 6px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.record-recent td {
+  padding: 10px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.record-empty {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .record-card,
+  .record-recent {
+    margin-left: 16px;
+    margin-right: 16px;
+    padding: 20px;
+  }
+
+  .record-score-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .record-recent table {
+    font-size: 12px;
+  }
+}

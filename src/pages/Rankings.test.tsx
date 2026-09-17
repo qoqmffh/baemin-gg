@@ -51,5 +51,5 @@ test('includes the shared TopNav header', () => {
       <Rankings />
     </MemoryRouter>
   );
-  expect(screen.getByText('배민.GG')).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: '배민.GG' })).toHaveAttribute('href', '/');
 });

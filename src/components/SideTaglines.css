@@ -1,6 +1,7 @@
-.home-tagline {
-  position: absolute;
+.side-taglines {
+  position: fixed;
   top: 20%;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -12,7 +13,7 @@
   color: rgba(255, 255, 255, 0.75);
 }
 
-.home-tagline::before {
+.side-taglines::before {
   content: '';
   display: block;
   width: 28px;
@@ -21,22 +22,22 @@
   margin-bottom: 10px;
 }
 
-.home-tagline--left {
+.side-taglines--left {
   left: 6%;
   text-align: left;
 }
 
-.home-tagline--right {
+.side-taglines--right {
   right: 6%;
   text-align: right;
 }
 
-.home-tagline--right::before {
+.side-taglines--right::before {
   margin-left: auto;
 }
 
 @media (max-width: 768px) {
-  .home-tagline {
+  .side-taglines {
     display: none;
   }
 }

@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import TopNav from '../components/TopNav';
+import PageBackground from '../components/PageBackground';
+import SideTaglines from '../components/SideTaglines';
 import { sortByRatingDesc, recentMatches, biggestUpsets } from '../lib/members';
 import { GITHUB_OWNER, GITHUB_REPO, MEMBERS_PATH, MATCHES_PATH } from '../config';
 import type { Member, Match } from '../types';
@@ -55,9 +58,11 @@ const TABS: { key: TabKey; label: string; subtitle: string; Icon: () => JSX.Elem
 ];
 
 export default function Rankings() {
+  const location = useLocation();
+  const initialTab = (location.state as { tab?: TabKey } | null)?.tab;
   const [members, setMembers] = useState<Member[]>([]);
   const [matches, setMatches] = useState<Match[]>([]);
-  const [tab, setTab] = useState<TabKey>('ranking');
+  const [tab, setTab] = useState<TabKey>(initialTab && TABS.some((t) => t.key === initialTab) ? initialTab : 'ranking');
 
   useEffect(() => {
     fetchPublicJson<Member[]>(MEMBERS_PATH).then(setMembers).catch(() => setMembers([]));
@@ -75,7 +80,9 @@ export default function Rankings() {
   const active = TABS.find((t) => t.key === tab)!;
 
   return (
-    <div style={{ minHeight: '100vh' }}>
+    <div style={{ position: 'relative', minHeight: '100vh' }}>
+      <PageBackground />
+      <SideTaglines />
       <TopNav />
       <div className="rankings-layout">
         <aside className="rankings-sidebar">

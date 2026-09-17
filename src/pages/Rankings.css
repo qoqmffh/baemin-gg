@@ -1,4 +1,6 @@
 .rankings-layout {
+  position: relative;
+  z-index: 1;
   display: flex;
   gap: 32px;
   padding: 0 32px 48px;

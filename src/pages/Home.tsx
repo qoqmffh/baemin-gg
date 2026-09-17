@@ -1,10 +1,11 @@
 import { useEffect, useState, type CSSProperties } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import HoverImageReveal from '../components/HoverImageReveal';
+import PageBackground from '../components/PageBackground';
+import SideTaglines from '../components/SideTaglines';
 import { searchMembers, sortByRatingDesc, recentMatchesFor } from '../lib/members';
 import { GITHUB_OWNER, GITHUB_REPO, MEMBERS_PATH, MATCHES_PATH } from '../config';
 import type { Match, Member } from '../types';
-import './Home.css';
 
 async function fetchPublicJson<T>(path: string): Promise<T> {
   const res = await fetch(
@@ -12,22 +13,6 @@ async function fetchPublicJson<T>(path: string): Promise<T> {
   );
   if (!res.ok) throw new Error(`Failed to fetch ${path}: ${res.status}`);
   return res.json() as Promise<T>;
-}
-
-function HomeBackground() {
-  return (
-    <div
-      aria-hidden
-      style={{
-        position: 'absolute',
-        inset: 0,
-        zIndex: 0,
-        backgroundImage: "url('image/backgroun_home.png')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    />
-  );
 }
 
 function SearchIcon() {
@@ -212,17 +197,8 @@ export default function Home() {
 
   return (
     <div style={{ position: 'relative', height: '100vh', overflow: 'hidden auto' }}>
-      <HomeBackground />
-      <div className="home-tagline home-tagline--left">
-        <span>PLAY</span>
-        <span>TOGETHER</span>
-        <span>BE BETTER</span>
-      </div>
-      <div className="home-tagline home-tagline--right">
-        <span>BADMINTON</span>
-        <span>COMMUNITY</span>
-        <span>배민.GG</span>
-      </div>
+      <PageBackground />
+      <SideTaglines />
       <div
         style={{
           position: 'relative',

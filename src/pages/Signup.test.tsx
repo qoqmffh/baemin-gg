@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, expect, test, vi } from 'vitest';
 import Signup from './Signup';
 import * as github from '../lib/github';
@@ -16,12 +17,16 @@ test('submitting the form appends a new member and shows a success message', asy
       updater([]);
     });
 
-  render(<Signup />);
+  render(
+    <MemoryRouter>
+      <Signup />
+    </MemoryRouter>
+  );
   const user = userEvent.setup();
   await user.type(screen.getByLabelText('이름'), '김태준');
-  await user.type(screen.getByLabelText('부서'), '개발');
-  await user.type(screen.getByLabelText('직급'), '사원');
-  await user.click(screen.getByRole('button', { name: '가입하기' }));
+  await user.type(screen.getByLabelText('소속'), '개발');
+  await user.type(screen.getByLabelText('부서'), '사원');
+  await user.click(screen.getByRole('button', { name: '가입하기 →' }));
 
   expect(updateSpy).toHaveBeenCalledTimes(1);
   const [path, , updater] = updateSpy.mock.calls[0] as unknown as [
