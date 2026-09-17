@@ -1,1 +1,21 @@
-[]
+[
+  {
+    "id": "c31d2505-9e20-4827-b82c-cc1019ef8e88",
+    "type": "singles",
+    "teamA": [
+      "5866ff0b-52a9-4a82-bd01-c049712b807c"
+    ],
+    "teamB": [
+      "02ff3622-2eb4-43ea-806b-c4d6d6aa672a"
+    ],
+    "scoreA": 1,
+    "scoreB": 21,
+    "winner": "B",
+    "ratingChanges": {
+      "5866ff0b-52a9-4a82-bd01-c049712b807c": -16,
+      "02ff3622-2eb4-43ea-806b-c4d6d6aa672a": 16
+    },
+    "playedAt": "2026-09-17T07:59:06.809Z",
+    "recordedAt": "2026-09-17T07:59:06.809Z"
+  }
+]
