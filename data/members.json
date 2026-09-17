@@ -18,5 +18,15 @@
     "wins": 0,
     "losses": 0,
     "createdAt": "2026-09-17T07:50:41.972Z"
+  },
+  {
+    "id": "94d78a98-3210-4adb-8ba2-4e6a2bbbc3bb",
+    "name": "정대진",
+    "department": "위드컴퍼니",
+    "position": "무선영업팀",
+    "rating": 1200,
+    "wins": 0,
+    "losses": 0,
+    "createdAt": "2026-09-17T07:50:54.610Z"
   }
 ]
