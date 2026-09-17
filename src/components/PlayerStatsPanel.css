@@ -33,7 +33,7 @@
   padding: 10px 14px;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(0, 0, 0, 0.4);
+  background: #0d0d0d;
   color: #ffffff;
   cursor: pointer;
   font-size: 14px;
@@ -71,7 +71,7 @@
   padding: 16px;
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(0, 0, 0, 0.4);
+  background: #0d0d0d;
 }
 
 .stat-card__label {
@@ -93,6 +93,10 @@
 
 .player-stats__section {
   margin-bottom: 24px;
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #0d0d0d;
 }
 
 .player-stats__section h4 {

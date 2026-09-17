@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import TopNav from '../components/TopNav';
 import PageBackground from '../components/PageBackground';
-import SideTaglines from '../components/SideTaglines';
 import PlayerStatsPanel from '../components/PlayerStatsPanel';
 import { sortByRatingDesc, recentMatches, biggestUpsets } from '../lib/members';
 import { GITHUB_OWNER, GITHUB_REPO, MEMBERS_PATH, MATCHES_PATH } from '../config';
@@ -99,7 +98,6 @@ export default function Rankings() {
   return (
     <div style={{ position: 'relative', minHeight: '100vh' }}>
       <PageBackground />
-      <SideTaglines />
       <TopNav />
       <div className="rankings-layout">
         <aside className="rankings-sidebar">

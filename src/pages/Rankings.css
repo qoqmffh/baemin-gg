@@ -13,6 +13,10 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  padding: 16px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #0d0d0d;
 }
 
 .rankings-sidebar__title {
@@ -78,7 +82,7 @@
   padding: 16px 20px;
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(0, 0, 0, 0.4);
+  background: #0d0d0d;
 }
 
 .rankings-card__rank {

@@ -8,7 +8,19 @@ export default function PatGate({ children }: { children: ReactNode }) {
   if (pat) return <>{children}</>;
 
   return (
-    <div style={{ padding: 24, maxWidth: 480, margin: '0 auto' }}>
+    <div
+      style={{
+        position: 'relative',
+        zIndex: 1,
+        padding: 24,
+        maxWidth: 480,
+        margin: '0 auto',
+        borderRadius: 20,
+        border: '1px solid rgba(255,255,255,0.15)',
+        background: '#0d0d0d',
+        boxSizing: 'border-box',
+      }}
+    >
       <h2>GitHub Personal Access Token 입력</h2>
       <p>배민.GG는 GitHub 리포를 데이터베이스로 사용합니다. 쓰기 권한이 있는 PAT를 입력해주세요.</p>
       <input
@@ -16,7 +28,7 @@ export default function PatGate({ children }: { children: ReactNode }) {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="ghp_..."
-        style={{ width: '100%', padding: 8, marginBottom: 12 }}
+        style={{ width: '100%', padding: 8, marginBottom: 12, boxSizing: 'border-box' }}
       />
       <button
         onClick={() => {
