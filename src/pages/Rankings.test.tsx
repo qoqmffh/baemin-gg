@@ -1,4 +1,6 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, expect, test, vi } from 'vitest';
 import Rankings from './Rankings';
 
@@ -17,11 +19,37 @@ beforeEach(() => {
   });
 });
 
-test('renders members sorted by rating descending', async () => {
-  render(<Rankings />);
+test('renders members sorted by rating descending on the default 랭킹 tab', async () => {
+  render(
+    <MemoryRouter>
+      <Rankings />
+    </MemoryRouter>
+  );
   const rows = await screen.findAllByTestId('ranking-row');
   expect(rows.map((r) => r.textContent)).toEqual([
     expect.stringContaining('박서연'),
     expect.stringContaining('김태준'),
   ]);
+});
+
+test('switching to the 최근 경기 tab shows recent matches with player names', async () => {
+  render(
+    <MemoryRouter>
+      <Rankings />
+    </MemoryRouter>
+  );
+  await screen.findAllByTestId('ranking-row');
+  const user = userEvent.setup();
+  await user.click(screen.getByText('최근 경기'));
+
+  expect(await screen.findByText(/김태준.*박서연/)).toBeInTheDocument();
+});
+
+test('includes the shared TopNav header', () => {
+  render(
+    <MemoryRouter>
+      <Rankings />
+    </MemoryRouter>
+  );
+  expect(screen.getByText('배민.GG')).toBeInTheDocument();
 });

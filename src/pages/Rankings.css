@@ -1,0 +1,128 @@
+.rankings-layout {
+  display: flex;
+  gap: 32px;
+  padding: 0 32px 48px;
+  align-items: flex-start;
+}
+
+.rankings-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rankings-sidebar__title {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  padding: 0 12px;
+}
+
+.rankings-sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 15px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.rankings-sidebar__item.is-active {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.rankings-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.rankings-main__header {
+  margin-bottom: 24px;
+}
+
+.rankings-main__header h2 {
+  font-size: 32px;
+  margin: 0;
+}
+
+.rankings-main__header p {
+  margin: 4px 0 0;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+
+.rankings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rankings-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.rankings-card__rank {
+  width: 28px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.rankings-card__name {
+  flex: 1;
+  font-weight: 600;
+}
+
+.rankings-card__meta {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 14px;
+}
+
+.rankings-empty {
+  color: rgba(255, 255, 255, 0.55);
+  padding: 24px 0;
+}
+
+@media (max-width: 768px) {
+  .rankings-layout {
+    flex-direction: column;
+    padding: 0 16px 32px;
+    gap: 20px;
+  }
+
+  .rankings-sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 8px;
+  }
+
+  .rankings-sidebar__title {
+    display: none;
+  }
+
+  .rankings-sidebar__item {
+    white-space: nowrap;
+  }
+
+  .rankings-card {
+    flex-wrap: wrap;
+  }
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState, type CSSProperties } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import HoverImageReveal from '../components/HoverImageReveal';
 import { searchMembers, sortByRatingDesc, recentMatchesFor } from '../lib/members';
 import { GITHUB_OWNER, GITHUB_REPO, MEMBERS_PATH, MATCHES_PATH } from '../config';
@@ -160,7 +160,8 @@ function SearchResults({ query, members, matches }: { query: string; members: Me
 
 export default function Home() {
   const navigate = useNavigate();
-  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchParams] = useSearchParams();
+  const [searchOpen, setSearchOpen] = useState(searchParams.get('search') === '1');
   const [query, setQuery] = useState('');
   const [members, setMembers] = useState<Member[]>([]);
   const [matches, setMatches] = useState<Match[]>([]);

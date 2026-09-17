@@ -46,6 +46,15 @@ test('clicking FIND PLAYER reveals a search box that shows a matching member\'s 
   expect(screen.getByText('3승 1패')).toBeInTheDocument();
 });
 
+test('opens the search box automatically when navigated to with ?search=1', async () => {
+  render(
+    <MemoryRouter initialEntries={['/?search=1']}>
+      <Home />
+    </MemoryRouter>
+  );
+  expect(await screen.findByPlaceholderText('선수 이름을 검색해보세요')).toBeInTheDocument();
+});
+
 test('shows a not-found message when no member matches the query', async () => {
   render(
     <MemoryRouter>
