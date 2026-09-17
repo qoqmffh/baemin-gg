@@ -14,7 +14,7 @@ test('renders Home at the root route', () => {
       <App />
     </MemoryRouter>
   );
-  expect(screen.getByText('배민.GG')).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: '배민.GG' })).toBeInTheDocument();
 });
 
 test('renders Signup at /signup', () => {

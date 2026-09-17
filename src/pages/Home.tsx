@@ -4,6 +4,7 @@ import HoverImageReveal from '../components/HoverImageReveal';
 import { searchMembers } from '../lib/members';
 import { GITHUB_OWNER, GITHUB_REPO, MEMBERS_PATH } from '../config';
 import type { Member } from '../types';
+import './Home.css';
 
 async function fetchPublicJson<T>(path: string): Promise<T> {
   const res = await fetch(
@@ -13,11 +14,7 @@ async function fetchPublicJson<T>(path: string): Promise<T> {
   return res.json() as Promise<T>;
 }
 
-// Stylized badminton court markings, used as a low-opacity atmospheric
-// background rather than a literal photo — keeps the hero (heading + hover
-// menu) as the boldest element on the page.
-function CourtBackground() {
-  const lineStyle = { stroke: 'rgba(255,255,255,0.09)', strokeWidth: 0.35, fill: 'none' } as const;
+function HomeBackground() {
   return (
     <div
       aria-hidden
@@ -25,34 +22,11 @@ function CourtBackground() {
         position: 'absolute',
         inset: 0,
         zIndex: 0,
-        background:
-          'radial-gradient(ellipse 70% 55% at 50% 48%, rgba(32,60,92,0.35), rgba(0,0,0,0) 70%), #000000',
+        backgroundImage: "url('image/backgroun_home.png')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
       }}
-    >
-      <svg
-        viewBox="0 0 100 220"
-        preserveAspectRatio="xMidYMid slice"
-        style={{ width: '100%', height: '100%' }}
-      >
-        <rect x={5} y={5} width={90} height={210} {...lineStyle} />
-        <line x1={12} x2={12} y1={5} y2={215} {...lineStyle} />
-        <line x1={88} x2={88} y1={5} y2={215} {...lineStyle} />
-        <line x1={5} x2={95} y1={17} y2={17} {...lineStyle} />
-        <line x1={5} x2={95} y1={203} y2={203} {...lineStyle} />
-        <line x1={5} x2={95} y1={79} y2={79} {...lineStyle} />
-        <line x1={5} x2={95} y1={141} y2={141} {...lineStyle} />
-        <line x1={50} x2={50} y1={5} y2={79} {...lineStyle} />
-        <line x1={50} x2={50} y1={141} y2={215} {...lineStyle} />
-        <line
-          x1={5}
-          x2={95}
-          y1={110}
-          y2={110}
-          stroke="rgba(255,255,255,0.18)"
-          strokeWidth={0.6}
-        />
-      </svg>
-    </div>
+    />
   );
 }
 
@@ -92,7 +66,17 @@ export default function Home() {
 
   return (
     <div style={{ position: 'relative', height: '100vh', overflow: 'hidden' }}>
-      <CourtBackground />
+      <HomeBackground />
+      <div className="home-tagline home-tagline--left">
+        <span>PLAY</span>
+        <span>TOGETHER</span>
+        <span>BE BETTER</span>
+      </div>
+      <div className="home-tagline home-tagline--right">
+        <span>BADMINTON</span>
+        <span>COMMUNITY</span>
+        <span>배민.GG</span>
+      </div>
       <div
         style={{
           position: 'relative',
