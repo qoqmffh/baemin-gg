@@ -174,9 +174,6 @@ export default function Home() {
       .catch(() => setMatches([]));
   }, []);
 
-  // image/main-match-record.png still misspells "MATCH" as "MACTH" —
-  // left unset so the clean gradient placeholder shows instead of the typo,
-  // until a corrected export replaces it.
   const menuItems = {
     itemCount: 5,
     item1: {
@@ -189,6 +186,7 @@ export default function Home() {
     },
     item2: {
       text: 'MATCH RECORD',
+      image: { src: 'image/main-match-record.png', alt: 'MATCH RECORD' },
       onClick: () => navigate('/record'),
     },
     item3: {
