@@ -11,6 +11,14 @@ html, body, #root {
   font-family: system-ui, sans-serif;
 }
 
+/* Native <select> dropdown panels render with an OS-controlled white
+   background that we can't restyle, so force dark, legible option text
+   regardless of what color the surrounding dark theme sets. */
+select option {
+  color: #111111;
+  background-color: #ffffff;
+}
+
 .container {
   width: 100%;
   max-width: 1200px;

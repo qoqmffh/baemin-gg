@@ -32,7 +32,7 @@ test('renders members sorted by rating descending on the default 랭킹 tab', as
   ]);
 });
 
-test('switching to the 최근 경기 tab shows recent matches with player names', async () => {
+test('switching to the 최근 경기 tab shows recent matches with the winner marked', async () => {
   render(
     <MemoryRouter>
       <Rankings />
@@ -42,7 +42,8 @@ test('switching to the 최근 경기 tab shows recent matches with player names'
   const user = userEvent.setup();
   await user.click(screen.getByText('최근 경기'));
 
-  expect(await screen.findByText(/김태준.*박서연/)).toBeInTheDocument();
+  // teamA (김태준) won, so they must appear before "승" and before the loser (박서연)
+  expect(await screen.findByText(/김태준 승 vs 박서연/)).toBeInTheDocument();
 });
 
 test('includes the shared TopNav header', () => {

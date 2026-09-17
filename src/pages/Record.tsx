@@ -221,8 +221,14 @@ export default function Record() {
                 <tr key={match.id}>
                   <td>{match.playedAt.slice(0, 10)}</td>
                   <td>{MATCH_TYPE_LABEL[match.type]}</td>
-                  <td>{teamNames(match.teamA)}</td>
-                  <td>{teamNames(match.teamB)}</td>
+                  <td className={match.winner === 'A' ? 'record-recent__winner' : undefined}>
+                    {teamNames(match.teamA)}
+                    {match.winner === 'A' && <span className="record-recent__badge">승</span>}
+                  </td>
+                  <td className={match.winner === 'B' ? 'record-recent__winner' : undefined}>
+                    {teamNames(match.teamB)}
+                    {match.winner === 'B' && <span className="record-recent__badge">승</span>}
+                  </td>
                   <td>
                     {match.scoreA} - {match.scoreB}
                   </td>

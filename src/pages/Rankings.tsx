@@ -123,16 +123,20 @@ export default function Rankings() {
           {tab === 'recent' && (
             <div className="rankings-list">
               {recent.length === 0 && <p className="rankings-empty">최근 경기 기록이 없습니다.</p>}
-              {recent.map((match) => (
-                <div key={match.id} className="rankings-card">
-                  <span className="rankings-card__name">
-                    {teamNames(match.teamA)} vs {teamNames(match.teamB)}
-                  </span>
-                  <span className="rankings-card__meta">
-                    {match.scoreA} : {match.scoreB} ({match.playedAt.slice(0, 10)})
-                  </span>
-                </div>
-              ))}
+              {recent.map((match) => {
+                const winnerNames = teamNames(match.winner === 'A' ? match.teamA : match.teamB);
+                const loserNames = teamNames(match.winner === 'A' ? match.teamB : match.teamA);
+                return (
+                  <div key={match.id} className="rankings-card">
+                    <span className="rankings-card__name">
+                      {winnerNames} 승 vs {loserNames}
+                    </span>
+                    <span className="rankings-card__meta">
+                      {match.scoreA} : {match.scoreB} ({match.playedAt.slice(0, 10)})
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           )}
 

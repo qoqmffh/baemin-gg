@@ -80,4 +80,10 @@ test('shows the 3 most recent matches with player names, type, and score', async
   expect(within(table).getByText('박서연')).toBeInTheDocument();
   expect(within(table).getByText('21 - 18')).toBeInTheDocument();
   expect(within(table).getByText('단식')).toBeInTheDocument();
+
+  // teamA (김태준) won -> only their cell carries the winner badge
+  const winnerCell = within(table).getByText('김태준').closest('td')!;
+  expect(within(winnerCell).getByText('승')).toBeInTheDocument();
+  const loserCell = within(table).getByText('박서연').closest('td')!;
+  expect(within(loserCell).queryByText('승')).not.toBeInTheDocument();
 });
