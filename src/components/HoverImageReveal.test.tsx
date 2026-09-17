@@ -50,6 +50,36 @@ test('renders a previewText caption over the preview image, independent of the s
   expect(screen.getByTestId('preview-caption').textContent).toBe('LEADER\nBOARD');
 });
 
+test('renderLabel replaces the default text label but still tracks hover for the preview image', async () => {
+  const onCloseClick = vi.fn();
+  const withRenderLabel = {
+    itemCount: 2,
+    item1: {
+      text: 'FIND PLAYER',
+      image: { src: 'image/1.jpg', alt: 'FIND PLAYER' },
+      renderLabel: () => (
+        <div>
+          <input placeholder="선수 이름을 검색해보세요" />
+          <button onClick={onCloseClick}>close</button>
+        </div>
+      ),
+    },
+    item2: { text: 'MATCH RECORD' },
+  };
+  render(<HoverImageReveal items={withRenderLabel} />);
+
+  expect(screen.queryByText('FIND PLAYER')).not.toBeInTheDocument();
+  const input = screen.getByPlaceholderText('선수 이름을 검색해보세요');
+  expect(input).toBeInTheDocument();
+
+  const user = userEvent.setup();
+  await user.click(screen.getByText('close'));
+  expect(onCloseClick).toHaveBeenCalledTimes(1);
+
+  await user.hover(input);
+  expect(screen.getAllByText('MATCH RECORD')[0]).toHaveStyle({ color: '#51565A' });
+});
+
 test('dimAll dims every item even when none of them is hovered', () => {
   render(<HoverImageReveal items={items} textColor="#FFFFFF" dimColor="#51565A" dimAll />);
   const first = screen.getAllByText('FIND PLAYER')[0];

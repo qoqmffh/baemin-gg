@@ -36,7 +36,7 @@ test('clicking FIND PLAYER reveals a search box that shows a matching member\'s 
     </MemoryRouter>
   );
   const user = userEvent.setup();
-  await user.click(screen.getByText('FIND PLAYER'));
+  await user.click(screen.getAllByText('FIND PLAYER')[0]);
   const input = await screen.findByPlaceholderText('선수 이름을 검색해보세요');
   await user.type(input, '김태준');
 
@@ -53,7 +53,7 @@ test('shows a not-found message when no member matches the query', async () => {
     </MemoryRouter>
   );
   const user = userEvent.setup();
-  await user.click(screen.getByText('FIND PLAYER'));
+  await user.click(screen.getAllByText('FIND PLAYER')[0]);
   const input = await screen.findByPlaceholderText('선수 이름을 검색해보세요');
   await user.type(input, '없는사람');
 

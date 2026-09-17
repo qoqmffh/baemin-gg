@@ -1,4 +1,4 @@
-import { useRef, useState, type CSSProperties } from 'react';
+import { useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { motion, useMotionValue, useSpring, type Transition as MotionTransition } from 'framer-motion';
 
 interface Item {
@@ -8,6 +8,8 @@ interface Item {
   image?: { src?: string; srcSet?: string; alt?: string };
   link?: string;
   onClick?: () => void;
+  /** Replaces the default sliding text label with custom content (e.g. an inline search input), while keeping this item's hover/preview-image behavior. */
+  renderLabel?: () => ReactNode;
 }
 
 interface ItemsValue {
@@ -116,6 +118,7 @@ export default function HoverImageReveal({
       image: it?.image,
       link: it?.link,
       onClick: it?.onClick,
+      renderLabel: it?.renderLabel,
     });
   }
   const anyActive = hovered != null || dimAll;
@@ -233,7 +236,9 @@ export default function HoverImageReveal({
             textAlign: alignToText[align],
           };
 
-          const label = (
+          const label = item.renderLabel ? (
+            item.renderLabel()
+          ) : (
             <motion.div
               style={{ position: 'relative' }}
               animate={{ y: isHovered ? '-100%' : '0%' }}
@@ -255,7 +260,7 @@ export default function HoverImageReveal({
             <div
               key={i}
               onMouseEnter={() => setHovered(i)}
-              onClick={handleActivate}
+              onClick={item.renderLabel ? undefined : handleActivate}
               style={{ overflow: 'hidden', cursor: item.link || item.onClick ? 'pointer' : 'default' }}
             >
               {item.link ? (

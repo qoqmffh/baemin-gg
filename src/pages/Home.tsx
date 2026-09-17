@@ -39,85 +39,64 @@ function SearchIcon() {
   );
 }
 
-function FindPlayerControl({
-  open,
+function SearchPill({
   query,
   onQueryChange,
-  onToggle,
-  fontSize,
+  onClose,
 }: {
-  open: boolean;
   query: string;
   onQueryChange: (value: string) => void;
-  onToggle: () => void;
-  fontSize: string;
+  onClose: () => void;
 }) {
-  if (open) {
-    return (
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 16,
-          width: '100%',
-          maxWidth: 600,
-          margin: '0 auto',
-          padding: '16px 28px',
-          borderRadius: 9999,
-          border: '1px solid rgba(255,255,255,0.55)',
-          boxShadow: '0 0 26px rgba(255,255,255,0.18)',
-          background: 'rgba(0,0,0,0.35)',
-          boxSizing: 'border-box',
-        }}
-      >
-        <SearchIcon />
-        <span style={{ width: 1, height: 20, background: 'rgba(255,255,255,0.35)' }} />
-        <input
-          autoFocus
-          value={query}
-          onChange={(e) => onQueryChange(e.target.value)}
-          placeholder="선수 이름을 검색해보세요"
-          style={{
-            flex: 1,
-            background: 'transparent',
-            border: 'none',
-            outline: 'none',
-            color: '#FFFFFF',
-            fontSize: 16,
-          }}
-        />
-        <button
-          type="button"
-          onClick={onToggle}
-          aria-label="검색창 닫기"
-          style={{
-            background: 'none',
-            border: 'none',
-            color: 'rgba(255,255,255,0.6)',
-            cursor: 'pointer',
-            fontSize: 20,
-            lineHeight: 1,
-            padding: 0,
-          }}
-        >
-          ×
-        </button>
-      </div>
-    );
-  }
-
   return (
     <div
-      onClick={onToggle}
       style={{
-        textAlign: 'center',
-        fontFamily: 'var(--font-vitro-core)',
-        fontSize,
-        color: '#FFFFFF',
-        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 16,
+        width: '100%',
+        maxWidth: 600,
+        margin: '0 auto',
+        padding: '16px 28px',
+        borderRadius: 9999,
+        border: '1px solid rgba(255,255,255,0.55)',
+        boxShadow: '0 0 26px rgba(255,255,255,0.18)',
+        background: 'rgba(0,0,0,0.35)',
+        boxSizing: 'border-box',
       }}
     >
-      FIND PLAYER
+      <SearchIcon />
+      <span style={{ width: 1, height: 20, background: 'rgba(255,255,255,0.35)' }} />
+      <input
+        autoFocus
+        value={query}
+        onChange={(e) => onQueryChange(e.target.value)}
+        placeholder="선수 이름을 검색해보세요"
+        style={{
+          flex: 1,
+          background: 'transparent',
+          border: 'none',
+          outline: 'none',
+          color: '#FFFFFF',
+          fontSize: 16,
+        }}
+      />
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="검색창 닫기"
+        style={{
+          background: 'none',
+          border: 'none',
+          color: 'rgba(255,255,255,0.6)',
+          cursor: 'pointer',
+          fontSize: 20,
+          lineHeight: 1,
+          padding: 0,
+        }}
+      >
+        ×
+      </button>
     </div>
   );
 }
@@ -195,29 +174,39 @@ export default function Home() {
       .catch(() => setMatches([]));
   }, []);
 
+  // image/main-match-record.png still misspells "MATCH" as "MACTH" —
+  // left unset so the clean gradient placeholder shows instead of the typo,
+  // until a corrected export replaces it.
   const menuItems = {
-    itemCount: 4,
+    itemCount: 5,
     item1: {
-      text: 'MATCH RECORD',
-      image: { src: 'image/2.jpg', alt: 'MATCH RECORD' },
-      onClick: () => navigate('/record'),
+      text: 'FIND PLAYER',
+      image: { src: 'image/main-find-player.png', alt: 'FIND PLAYER' },
+      onClick: searchOpen ? undefined : () => setSearchOpen(true),
+      renderLabel: searchOpen
+        ? () => <SearchPill query={query} onQueryChange={setQuery} onClose={() => setSearchOpen(false)} />
+        : undefined,
     },
     item2: {
-      text: 'LEADERBOARD',
-      // Only the hover-preview caption wraps to two lines — the static
-      // menu label stays a single line.
-      previewText: 'LEADER\nBOARD',
-      image: { src: 'image/3.jpg', alt: 'LEADERBOARD' },
-      onClick: () => navigate('/rankings'),
+      text: 'MATCH RECORD',
+      onClick: () => navigate('/record'),
     },
     item3: {
-      text: 'CLUB INFO',
-      image: { src: 'image/4.jpg', alt: 'CLUB INFO' },
-      onClick: () => navigate('/club'),
+      text: 'LEADERBOARD',
+      // The preview image already bakes in a "LEADER / BOARD" line break
+      // as part of its own artwork, so no separate previewText overlay
+      // is needed here (it would just duplicate the same text).
+      image: { src: 'image/main-leaderboard.png', alt: 'LEADERBOARD' },
+      onClick: () => navigate('/rankings'),
     },
     item4: {
+      text: 'CLUB INFO',
+      image: { src: 'image/main-club-info.png', alt: 'CLUB INFO' },
+      onClick: () => navigate('/club'),
+    },
+    item5: {
       text: 'SIGN UP',
-      image: { src: 'image/5.jpg', alt: 'SIGN UP' },
+      image: { src: 'image/main-sign-up.png', alt: 'SIGN UP' },
       onClick: () => navigate('/signup'),
     },
   };
@@ -229,8 +218,6 @@ export default function Home() {
     margin: 0,
     paddingTop: '9vh',
   };
-
-  const menuFontSize = 'clamp(22px, 5vw, 48px)';
 
   return (
     <div style={{ position: 'relative', height: '100vh', overflow: 'hidden auto' }}>
@@ -255,24 +242,15 @@ export default function Home() {
         }}
       >
         <h1 style={headingStyle}>배민.GG</h1>
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '24px 0' }}>
-          <FindPlayerControl
-            open={searchOpen}
-            query={query}
-            onQueryChange={setQuery}
-            onToggle={() => setSearchOpen((v) => !v)}
-            fontSize={menuFontSize}
+        <div style={{ flex: 1 }}>
+          <HoverImageReveal
+            items={menuItems}
+            font={{ fontFamily: 'var(--font-vitro-core)', fontSize: 'clamp(22px, 5vw, 48px)' }}
+            backgroundColor="transparent"
+            dimAll={searchOpen}
           />
-          <div style={{ flex: 1 }}>
-            <HoverImageReveal
-              items={menuItems}
-              font={{ fontFamily: 'var(--font-vitro-core)', fontSize: menuFontSize }}
-              backgroundColor="transparent"
-              dimAll={searchOpen}
-            />
-          </div>
-          {searchOpen && <SearchResults query={query} members={members} matches={matches} />}
         </div>
+        {searchOpen && <SearchResults query={query} members={members} matches={matches} />}
       </div>
     </div>
   );
