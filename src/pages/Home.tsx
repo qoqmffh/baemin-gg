@@ -179,7 +179,6 @@ export default function Home() {
     itemCount: 5,
     item1: {
       text: 'FIND PLAYER',
-      image: { src: 'image/main-find-player.png', alt: 'FIND PLAYER' },
       onClick: searchOpen ? undefined : () => setSearchOpen(true),
       renderLabel: searchOpen
         ? () => <SearchPill query={query} onQueryChange={setQuery} onClose={() => setSearchOpen(false)} />
@@ -187,25 +186,18 @@ export default function Home() {
     },
     item2: {
       text: 'MATCH RECORD',
-      image: { src: 'image/main-match-record.png', alt: 'MATCH RECORD' },
       onClick: () => navigate('/record'),
     },
     item3: {
       text: 'LEADERBOARD',
-      // The preview image already bakes in a "LEADER / BOARD" line break
-      // as part of its own artwork, so no separate previewText overlay
-      // is needed here (it would just duplicate the same text).
-      image: { src: 'image/main-leaderboard.png', alt: 'LEADERBOARD' },
       onClick: () => navigate('/rankings'),
     },
     item4: {
       text: 'CLUB INFO',
-      image: { src: 'image/main-club-info.png', alt: 'CLUB INFO' },
       onClick: () => navigate('/club'),
     },
     item5: {
       text: 'SIGN UP',
-      image: { src: 'image/main-sign-up.png', alt: 'SIGN UP' },
       onClick: () => navigate('/signup'),
     },
   };
@@ -247,6 +239,7 @@ export default function Home() {
             font={{ fontFamily: 'var(--font-vitro-core)', fontSize: 'clamp(22px, 5vw, 48px)' }}
             backgroundColor="transparent"
             dimAll={searchOpen}
+            showPreview={false}
           />
         </div>
         {searchOpen && <SearchResults query={query} members={members} matches={matches} />}
